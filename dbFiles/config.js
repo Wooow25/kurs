@@ -1,12 +1,13 @@
 const dbConfig = {
     user: 'kurs',
     password: 'pass',
-    server:'DARYANIKITI8A0D',
+    server: 'DARYANIKITI8A0D',
     database: 'cinema',
-    options:{
+    options: {
         trustServerCertificate: true,
         trustedConnection: false,
-        enableArithAbort: true,},
+        enableArithAbort: true,
+    },
     port: 1433,
-
-module.exports = dbConfig;
+}
+module.exports = dbConfig
