@@ -1,6 +1,6 @@
-export class Movie{
-    constructor(id, age, genre, duration, namee, unpackKey) {
-        this.id = id,
+class Movie{
+    id;
+    constructor( age, genre, duration, namee, unpackKey) {
             this.age = age,
             this.genre = genre,
             this.duration = duration,
@@ -9,9 +9,10 @@ export class Movie{
     }
 }
 
-export class Report{
-    constructor(id, contraact, period, creationDate, title, sessionAmount, ticketAmount, revenue) {
-        this.id = id,
+class Report{
+    id;
+    constructor( contraact, period, creationDate, title, sessionAmount, ticketAmount, revenue) {
+        
             this.contraact = contraact,
             this.period = period,
             this.creationDate = creationDate,
@@ -23,21 +24,23 @@ export class Report{
 }
 
 
-export class Contract{
-    constructor(id, movie, disttributor, memorandumAmount, statee, deliveryType) {
-        this.id = id,
+class Contract{
+    id;
+    constructor( movie, disttributor, memorandumAmount, statee, deliveryType) {
+        
             this.movie = movie,
             this.disttributor = disttributor,
             this.memorandumAmount = memorandumAmount,
             this.statee = statee
-        this.deliveryType = deliveryType,
+        this.deliveryType = deliveryType
     }
 }
 
 
-export class Commitment{
-    constructor(id, contraact, deadline, statee, statemeent, fine, responsible) {
-        this.id = id,
+class Commitment{
+    id;
+    constructor( contraact, deadline, statee, statemeent, fine, responsible) {
+        
             this.contraact = contraact,
             this.deadline = deadline,
             this.statee = statee,
@@ -48,9 +51,10 @@ export class Commitment{
 }
 
 
-export class MoviesReport{
-    constructor(id, contraact, datee, sessionAmount, ticketAmount, revenue) {
-        this.id = id,
+class MoviesReport{
+    id;
+    constructor( contraact, datee, sessionAmount, ticketAmount, revenue) {
+        
             this.contraact = contraact,
             this.datee = datee,
             this.sessionAmount = sessionAmount,
@@ -60,21 +64,33 @@ export class MoviesReport{
 }
 
 
-export class Certificatee{
-    constructor(id, contraact, fileNamee) {
-        this.id = id,
+class Certificatee{
+    id;
+    constructor(contraact, fileNamee) {
+        
             this.contraact = contraact,
-            this.fileNamee = fileNamee,
+            this.fileNamee = fileNamee
     }
 }
 
 
-export class Distributor{
-    constructor(id, namee, adress, phone, email) {
-        this.id = id,
+class Distributor{
+    id;
+    constructor( namee, adress, phone, email) {
+        
             this.namee = namee,
             this.adress = adress,
             this.phone = phone,
-            this.email = email,
+            this.email = email
     }
+}
+
+module.exports ={
+    Distributor,
+    Certificatee,
+    MoviesReport,
+    Commitment,
+    Contract,
+    Report,
+    Movie
 }
