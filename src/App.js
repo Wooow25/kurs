@@ -1,23 +1,103 @@
-import logo from './logo.svg';
+
 import './App.css';
+import React, { useState } from 'react'
 
 function App() {
+  const [returnedData, setReturnedData] = useState(['Hiiiiiiii'])
+  const [message, updateMessage] = useState([''])
+  const [movie, setMovie] = useState({namee:'', genre:'', duration:0, age:0, unpackKey:'' })
+
+  const setInput = (e) =>{
+    const {name, value} = e.target;
+    if(name === 'duration' || name ==='age'){
+      setMovie(prevState => ({
+        ...prevState,
+        [name]: parseInt(value)
+      }))
+      return;
+    }
+    setMovie(prevState => ({
+      ...prevState,
+      [name]: value
+    }))
+
+  }
+
+  const getByName = async () => {
+    if(movie.namee !== ''){
+      const newData = await fetch('/getByName', {
+        method:'POST',
+        headers:{
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          namee: movie.namee
+        })
+      })
+          .then(res => res.json())
+      console.log(newData);
+      if(newData.length ===0 ){
+        updateMessage('nothing found')
+        return;
+      }
+      setReturnedData(newData[0])
+      updateMessage('')
+    }
+    else{
+      updateMessage(`PRINT NAME! current:${movie.namee}`);
+    }
+  }
+
+  const getData = async () => {
+    const newData = await fetch('/getMovie', {
+      method:'GET',
+      headers:{
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
+        .then(res => res.json())
+    console.log(newData);
+    setReturnedData(newData)
+  }
+
+  const postData = async () => {
+    console.log(`data from inputs:`)
+    console.log(movie)
+    const newData = await fetch('/createMovie', {
+      method:'POST',
+      headers:{
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+        body: JSON.stringify({
+          ...movie
+        })
+      
+    })
+        .then(res => res.json())
+    console.log(`response from server: ${newData.namee}`);
+    console.log(newData);
+  }
+
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1 className='warning'>{message}</h1>
+      <input type="text" name="namee" placeholder="Название" onChange={setInput}></input>
+      <input type="text" name="genre" placeholder="Жанр" onChange={setInput}></input>
+      <input type="number" name="duration" placeholder="Продолжительность (мин.)" onChange={setInput}></input>
+      <input type="number" name="age" placeholder="Воpастное ограничение" onChange={setInput}></input>
+      <input type="text" name="unpackKey" placeholder="Ключ распаковки" onChange={setInput}></input>
+      <button onClick = { ()=> getData()}>getMovies</button>
+      <button onClick = { ()=> getByName()}>getByName</button>
+      <button onClick = { ()=> postData()}>Create</button>
+        <p>Movie: {returnedData.namee}</p>
+        <p>age: {returnedData.age}</p>
+        <p>duration: {returnedData.duration}</p>
     </div>
   );
 }

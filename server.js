@@ -10,35 +10,40 @@ function delay(timeout) {
     });
 }
 
-// const API_PORT = process.env.PORT || 5000;
-// const app = express(); //command to start server
-//
-// app.use(cors());
-//
-//
-// app.get('/api', function(req, res) {
-//     console.log('called hello')
-//     res.send({result:'Hello!'})
-// })
-//
-//
-// app.get('/quit', function(req, res) {
-//     console.log('called quit')
-//     res.send({result:'Bye!!'})
-// })
-//
-//
-// app.listen(API_PORT, () => console.log(`listening on ${API_PORT}`))
+const API_PORT = process.env.PORT || 5000;
+const app = express(); //command to start server
 
-let cart= new Movie(18,'doc',148,'Peace', '')
+app.use(express.json());
+app.use(express.urlencoded());
+app.use(cors());
 
 
- dbOperations.createMovie(cart).then(res=>{
-    console.log(res.recordset)
+app.post('/createMovie', async (req, res) => {
+    console.log('called createMovie')
+    await dbOperations.createMovie(req.body)
+    const result = await dbOperations.getByName(req.body.namee)
+    res.send(result.recordset)
+    
+})
+
+app.post('/getByName', async (req, res) => {
+    console.log('called getByName')
+    const result = await dbOperations.getByName(req.body.namee)
+    res.send(result.recordset)
+    
 })
 
 
-dbOperations.getMovies().then(res=>{
-    console.log(res.recordset)
+app.get('/getMovie', function(req, res) {
+    console.log('called getMovie')
+    dbOperations.getMovies().then(resu=>{
+        res.send(resu.recordset)
+    })
 })
+
+
+ app.listen(API_PORT, () => console.log(`listening on ${API_PORT}`))
+
+
+
 

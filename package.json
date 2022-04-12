@@ -2,7 +2,7 @@
   "name": "kursovaya",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://10.211.55.4:3000",
+  "proxy": "http://10.211.55.4:5000",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^12.1.4",
@@ -18,9 +18,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "server": "nodemon server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev": "run-p server start"
   },
   "eslintConfig": {
     "extends": [
