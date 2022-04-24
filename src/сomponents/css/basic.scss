@@ -1,0 +1,132 @@
+@mixin flex{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.flex{
+    @include flex
+}
+
+.flex-column{
+    @include flex;
+    flex-direction: column;
+
+}
+
+.header{
+    background-color: #0A244C;
+    color: #FFFFFF;
+    width: 100%;
+    height: max-content;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+@mixin btn{
+    border: none;
+    border-radius: 5px;
+    font: 20px bold;
+    padding: 5px 10px;
+    width: 250px;
+    cursor: pointer;
+    &:active{
+        box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
+        transform: translateY(1px);
+    }
+}
+
+.btn{
+    @include btn;
+    background-color: #0C2F73;
+    color: #FFFFFF;
+    margin: 10px;
+}
+
+.btn-white{
+    @include btn;
+    background-color: #FFFFFF;
+    color: #0C2F73;
+    font: 15px bold;
+    width: 100px;
+    margin: 5px;
+}
+
+.movie-card{
+    padding: 20px;
+    border: black 1px solid;
+    width:80%;
+    margin: 25px auto 10px;
+}
+
+
+.input{
+    border: none;
+    border-radius: 6px;
+    background-color: #e6e6e6;
+    font-size: 16px;
+    padding: 5px 15px 5px;
+    width:400px
+}
+
+.input-label{
+    font-weight: 600;
+}
+
+.input-wrapper{
+    margin: 5px;
+}
+
+.input-search{
+    border: none;
+    border-radius: 6px;
+    background-color: #ffffff;
+    font-size: 16px;
+    padding: 10px 15px 5px;
+    width:300px;
+
+}
+
+.input-label-search{
+    font-weight: 600;
+    margin: 5px;
+
+}
+
+.flex-search{
+    @include flex;
+    align-items: flex-end;
+    justify-content:space-between;
+    margin: 0 75px;
+}
+
+.movie-logo{
+    width: 300px;
+}
+
+.menu-title{
+    font-size: 40px;
+    margin-top: 10px;
+    color:#FFFFFF
+}
+
+.half{
+    width:50%
+}
+
+.menu-image{
+    width:700px;
+    margin-right: -40px;
+
+}
+
+.center{
+    margin:auto
+}
