@@ -4,9 +4,11 @@
   "private": true,
   "proxy": "http://10.211.55.4:5000",
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
+    "antd": "^4.20.0",
     "cors": "^2.8.5",
     "express": "^4.17.3",
     "mssql": "^8.1.0",
@@ -41,5 +43,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "css-loader": "^6.7.1",
+    "style-loader": "^3.3.1"
   }
 }

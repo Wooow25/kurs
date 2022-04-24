@@ -26,19 +26,18 @@ app.post('/createMovie', async (req, res) => {
     
 })
 
-app.post('/getByName', async (req, res) => {
-    console.log('called getByName')
+app.post('/getMovieByName', async (req, res) => {
+    console.log('called getMovieByName');
     const result = await dbOperations.getByName(req.body.namee)
     res.send(result.recordset)
     
 })
 
 
-app.get('/getMovie', function(req, res) {
-    console.log('called getMovie')
-    dbOperations.getMovies().then(resu=>{
-        res.send(resu.recordset)
-    })
+app.get('/getMovies', async (req, res) =>{
+    console.log('called getMovie');
+    const result =  await dbOperations.getMovies()
+    res.send(result.recordset)
 })
 
 
