@@ -5,7 +5,7 @@ import movieLogo from '../img/img.png'
 import newMovie from '../img/new.png'
 
 export const MovieCard = (props) => {
-    const [movie, setMovie] = useState({id: props.id, namee: props.namee, genre: props.genre, duration: props.duration, age:props.age, unpackKey:props.unpackKey })
+    const [movie, setMovie] = useState({...props.movie})
 
     const setInput = (e) =>{
       const {name, value} = e.target;
@@ -21,8 +21,25 @@ export const MovieCard = (props) => {
         [name]: value
       }))
     }
+
+    const updateData = async (movie) => {
+      const newData = await fetch('/updateMovie', {
+        method:'POST',
+        headers:{
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          ...movie
+        })
+      })
+          .then(res => res.json())
+      console.log(newData);
+      return newData
+    }
+   
     return(
-        <div className='movie-card flex'>
+         <div className='movie-card flex' id={movie.id}>
             <img className='movie-logo' src={movieLogo}></img>
             <div className='flex-column'> 
                 <Input text="Жанр" type="text" name="genre"  onChange={(e)=>{setInput(e)}} value={movie.genre}></Input>
@@ -32,13 +49,13 @@ export const MovieCard = (props) => {
                 <Input text="Ключ распаковки" type="text" name="unpackKey" onChange={(e)=>{setInput(e)}} value={movie.unpackKey}></Input>
             </div>
             
-            <div className='flex-column'>  
-                <Btn text ="Изменить" onClick={()=> alert('Изменить')}  />
+             <div className='flex-column'>  
+                <Btn text ="Изменить" onClick={()=> updateData(movie)}  />
                 <Btn text ="Найти договор" onClick={()=> alert('Найти договор')}  />
-                <Btn text ="Удалить" onClick={()=> alert('Удалить')}  />
+                <Btn text ="Удалить" onClick={()=> props.onDelete(movie.id)}  />
             </div>
 
-        </div>
+        </div> 
     ) 
 }
 

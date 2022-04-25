@@ -21,14 +21,21 @@ app.use(cors());
 app.post('/createMovie', async (req, res) => {
     console.log('called createMovie')
     await dbOperations.createMovie(req.body)
-    const result = await dbOperations.getByName(req.body.namee)
+    const result = await dbOperations.getMovieByName(req.body.namee)
     res.send(result.recordset)
     
 })
 
 app.post('/getMovieByName', async (req, res) => {
     console.log('called getMovieByName');
-    const result = await dbOperations.getByName(req.body.namee)
+    const result = await dbOperations.getMovieByName(req.body.namee)
+    res.send(result.recordset)
+    
+})
+
+app.post('/getMovieById', async (req, res) => {
+    console.log('called getMovieByName');
+    const result = await dbOperations.getMovieById(req.body.id)
     res.send(result.recordset)
     
 })
@@ -40,6 +47,23 @@ app.get('/getMovies', async (req, res) =>{
     res.send(result.recordset)
 })
 
+app.post('/updateMovie', async (req, res) => {
+    console.log('called updateMovie')
+    console.log(req.body)
+    await dbOperations.updateMovie(req.body)
+    const result = await dbOperations.getMovieById(req.body.id)
+    res.send(result.recordset[0])
+})
+
+
+app.post('/deleteMovie', async (req, res) => {
+    console.log('called deleteMovie')
+    console.log(req.body.id)
+    await dbOperations.deleteMovie(req.body.id)
+    const result =  await dbOperations.getMovies()
+    console.log('###: called getdata')
+    res.send(result.recordset)
+})
 
  app.listen(API_PORT, () => console.log(`listening on ${API_PORT}`))
 

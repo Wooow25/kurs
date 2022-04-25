@@ -13,10 +13,23 @@ const getMovies = async() => {
     }
 }
 
-const getByName = async(movieName) => {
+const getMovieByName = async(movieName) => {
     try{
         let pool = await mssql.connect(config);
         let movies = await pool.request().query(`select * from movie where namee='${movieName}'`)
+        console.log(movies);
+        return(movies)
+    }
+    catch(error){
+        console.log(error)
+    }
+}
+
+
+const getMovieById = async(id) => {
+    try{
+        let pool = await mssql.connect(config);
+        let movies = await pool.request().query(`select * from movie where id='${id}'`)
         console.log(movies);
         return(movies)
     }
@@ -38,8 +51,37 @@ const createMovie = async(Movie) => {
     }
 }
 
+const updateMovie = async(Movie) => {
+    try{
+        let pool = await mssql.connect(config);
+        let movies = await pool.request()
+        .query(`update movie set age=${Movie.age}, genre='${Movie.genre}', duration=${Movie.duration}, namee='${Movie.namee}', unpackKey='${Movie.unpackKey}'
+         where id=${Movie.id}`)
+        return movies;
+    }
+    catch(error){
+        console.log(error)
+    }
+}
+
+const deleteMovie = async(id) => {
+    try{
+        let pool = await mssql.connect(config);
+        console.log('procesing...')
+        let movies = await pool.request()
+        .query(`delete from movie where id=${id}`)
+        return movies;
+    }
+    catch(error){
+        console.log(error)
+    }
+}
+
 module.exports = {
     createMovie,
     getMovies,
-    getByName,
+    getMovieByName,
+    getMovieById,
+    updateMovie,
+    deleteMovie
 }

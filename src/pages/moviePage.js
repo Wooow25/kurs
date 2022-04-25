@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import {Btn, Header} from '../сomponents/basic';
 import {MovieCard, EmptyMovieCard} from '../сomponents/movies';
 import Spinner from '../сomponents/spinner'
+import movieLogo from '../img/img.png'
 
 const getData = async () => {
   const newData = await fetch('/getMovies', {
@@ -16,7 +17,6 @@ const getData = async () => {
   console.log(newData);
   return newData
 }
-
 
 const getByName = async (namee) => {
   const newData = await fetch('/getMovieByName', {
@@ -37,12 +37,16 @@ const getByName = async (namee) => {
   return newData;
 }
 
-
+const pTypes = {
+  all:'all',
+  empty: 'empty',
+  find: 'find'
+}
 
 
 const Container = (Component)=>{
   const [item, setItem] = useState([])
-  
+  const [printType, setPrintType] = useState([pTypes.all])
   useEffect(()=>{
     let mounted = true;
     getData().then(items => {
@@ -54,6 +58,25 @@ const Container = (Component)=>{
   },[]
   )
 
+  const onDelete = async(id) =>{
+    const newData = await fetch('/deleteMovie', {
+      method:'POST',
+      headers:{
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        id: id
+      })
+    })
+        .then(res => res.json())
+    console.log(newData);
+    if(newData.length ===0 ){
+      return;
+    }
+    setItem(newData) ;
+  }
+
   return(
     <>
      {
@@ -61,8 +84,14 @@ const Container = (Component)=>{
        <div className='center'>
         <Spinner size='large'/>
         </div>
-       :
-        item.map(i=><MovieCard key={i.id} namee={i.namee} genre={i.genre} duration={i.duration} age={i.age} unpackKey={i.unpackKey} />)
+       : printType === pTypes.empty ? {
+
+       } : printType === pTypes.find ? {
+
+       } :
+      
+        item.map(i => <MovieCard key={i.id} movie={i} onDelete={(id)=>{onDelete(id)}}  />
+           )
      }
     </>
   )
