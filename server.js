@@ -41,9 +41,10 @@ app.post('/getMovieById', async (req, res) => {
 })
 
 
-app.get('/getMovies', async (req, res) =>{
+app.post('/getMovies', async (req, res) =>{
     console.log('called getMovie');
-    const result =  await dbOperations.getMovies()
+    console.log(req.body.page);
+    const result =  await dbOperations.getMovies(req.body.page)
     res.send(result.recordset)
 })
 
@@ -60,7 +61,7 @@ app.post('/deleteMovie', async (req, res) => {
     console.log('called deleteMovie')
     console.log(req.body.id)
     await dbOperations.deleteMovie(req.body.id)
-    const result =  await dbOperations.getMovies()
+    const result =  await dbOperations.getMovies(1)
     console.log('###: called getdata')
     res.send(result.recordset)
 })

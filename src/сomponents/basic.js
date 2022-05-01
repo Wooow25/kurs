@@ -1,5 +1,9 @@
 import './css/basic.scss';
-import React, { useState } from 'react'
+import React, { useState,useEffect} from 'react'
+
+import {
+    Link
+  } from "react-router-dom";
 
 export const Btn = (props) => {
     return(
@@ -10,25 +14,27 @@ export const Btn = (props) => {
 }
 
 export const Header = (props) => {
+    const {title, placeholder} = props.describe
     return(
         <>
         
             <header className='header'>
                 <div className='flex-search'>
 
-                {props.menu ? <h1 className='menu-title'>{props.title}</h1> : 
+                {props.menu ? <h1 className='menu-title'>Меню</h1> : 
                 <>
                      <div className='flex'>
-                        <h1 className='menu-title'>{props.title}</h1>
+                        <h1 className='menu-title'>{title || "test" }</h1>
                        <Btn white text='Создать' onClick = {()=>props.clickAdd()} />
                     </div>
                     <div className='flex-search'>
                         <div className='input-wrapper'>  
                         <p className='input-label-search'>Поиск элемента</p>
-                        <input className='input-search' name="search" placeholder='Введите название' ></input>
+                        <input  className='input-search' name="search" placeholder={`Введите ${placeholder || 'что-то'}`} ></input>
                     </div>
                         <Btn text='Найти' white onClick = {()=>props.clickFind()} />
-                        <Btn text='Меню' white onClick = {()=>props.clickMenu()} />
+                        <Link to="/"><Btn text='Меню' white /></Link>
+                        
                     </div>
                 </>
                 }
@@ -40,6 +46,9 @@ export const Header = (props) => {
 }
 
 export const Input = (props) =>{
+    useEffect(()=>{
+
+    },[props.value])
     return(
         <div className='input-wrapper' hidden={props.hidden}>  
         <p className='input-label'>{props.text}</p>
@@ -47,5 +56,4 @@ export const Input = (props) =>{
         defaultValue={props.value} onChange={props.onChange}></input>
         </div>
     )
-  
 }

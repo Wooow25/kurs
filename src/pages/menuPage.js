@@ -1,18 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import {Btn, Header} from '../сomponents/basic';
 import hello from '../img/hello.png'
+import {
+  Link
+} from "react-router-dom";
 
+
+const describeHeader = {
+  title: 'Меню',
+}
 
 const Menu = ()=>{
     return(
       <>
-          <Header title='Меню' menu/>
+          <Header describe={describeHeader}  menu/>
         <div className='flex'>
           <div className='flex-column half'> 
-            <Btn text ="Фильмография" onClick={()=> alert("Фильмография")}  />
-            <Btn text ="Договоры" onClick={()=> alert("Договоры")}  />
-            <Btn text ="Отчеты" onClick={()=> alert("Отчеты")}  />
-            <Btn text ="Прокатчики" onClick={()=> alert("Прокатчики")}  />
+          <Link to="/movies"><Btn text ="Фильмография" /></Link>
+          <Link to="/contract"><Btn text ="Договоры" /></Link>
+          <Link to="/reports"><Btn text ="Отчеты" /></Link>
+          <Link to="/distributor"><Btn text ="Прокатчики" /></Link>
+          
           </div>
             <img className='menu-image' src={hello}></img>
         </div>

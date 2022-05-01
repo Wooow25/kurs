@@ -6,92 +6,39 @@ import {Btn, Header} from './сomponents/basic';
 import Spinner from './сomponents/spinner'
 import Films from './pages/moviePage'
 import Menu from './pages/menuPage'
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
 
+
+const LoadPage = (props) =>{
+  return(
+    <div className='App'>
+      <h1>{props.title}</h1>
+      <Spinner size='large'/>
+    </div>
+  )
+}
 
 
 function App() {
-  const [returnedData, setReturnedData] = useState(['Hiiiiiiii'])
-  const [message, updateMessage] = useState([''])
-
-
-
-  // const getByName = async () => {
-  //   if(movie.namee !== ''){
-  //     const newData = await fetch('/getByName', {
-  //       method:'POST',
-  //       headers:{
-  //         'Content-Type': 'application/json',
-  //         'Accept': 'application/json'
-  //       },
-  //       body: JSON.stringify({
-  //         namee: movie.namee
-  //       })
-  //     })
-  //         .then(res => res.json())
-  //     console.log(newData);
-  //     if(newData.length ===0 ){
-  //       updateMessage('nothing found')
-  //       return;
-  //     }
-  //     setReturnedData(newData[0])
-  //     updateMessage('')
-  //   }
-  //   else{
-  //     updateMessage(`PRINT NAME! current:${movie.namee}`);
-  //   }
-  // }
-
-
-
-  // const postData = async () => {
-  //   console.log(`data from inputs:`)
-  //   console.log(movie)
-  //   const newData = await fetch('/createMovie', {
-  //     method:'POST',
-  //     headers:{
-  //       'Content-Type': 'application/json',
-  //       'Accept': 'application/json'
-  //     },
-  //       body: JSON.stringify({
-  //         ...movie
-  //       })
-      
-  //   })
-  //       .then(res => res.json())
-  //   console.log(`response from server: ${newData.namee}`);
-  //   console.log(newData);
-  // }
-
-
-
-
   return (
     <>
-      {/* <Header title='тест' new='true'/>
-      <div className="App">
-       <Menu/>
-       </div> */}
-
-        
-     { /* 
-         <h1 className='warning'>{message}</h1>
-        <input type="text" name="namee" placeholder="Название" onChange={setInput}></input>
-        <input type="text" name="genre" placeholder="Жанр" onChange={setInput}></input>
-        <input type="number" name="duration" placeholder="Продолжительность (мин.)" onChange={setInput}></input>
-        <input type="number" name="age" placeholder="Воpастное ограничение" onChange={setInput}></input>
-        <input type="text" name="unpackKey" placeholder="Ключ распаковки" onChange={setInput}></input>
-        <button onClick = { ()=> getData()}>getMovies</button>
-        <button onClick = { ()=> getByName()}>getByName</button>
-        <button onClick = { ()=> postData()}>Create</button>
-        <Btn text ="Договоры" onClick={()=> getData()}  />
-          <p>Movie: {returnedData.namee}</p>
-          <p>age: {returnedData.age}</p>
-          <p>duration: {returnedData.duration}</p> */}
      
-
-
+ 
+          <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<Menu/>}/>
+            <Route path='/movies' element={<Films/>}/>
+            <Route path='/contract' element={<LoadPage title='Контракты'/>}/>
+            <Route path='/reports' element={<LoadPage title='Отчеты'/>}/>
+            <Route path='/distributor' element={<LoadPage title='Прокатчик'/>}/>
+          </Routes>
+          </BrowserRouter>
      
-    <Films/>
+   
       
 
     </>

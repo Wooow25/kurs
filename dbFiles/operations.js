@@ -1,10 +1,17 @@
 const config = require('./config')
 const mssql = require('mssql')
 
-const getMovies = async() => {
+const getMovies = async(page) => {
     try{
         let pool = await mssql.connect(config);
-        let movies = pool.request().query(`select * from movie `)
+        const step = 4;
+        let movies = pool.request().query(`WITH num_row
+        AS
+        ( SELECT row_number() OVER (ORDER BY id) as nom , * FROM movie)
+        
+             SELECT * FROM num_row
+        WHERE nom>=(${page}-1)*${step} and nom<=${page}*${step} -1 
+        `)
         console.log(movies);
         return(movies)
     }
@@ -16,7 +23,7 @@ const getMovies = async() => {
 const getMovieByName = async(movieName) => {
     try{
         let pool = await mssql.connect(config);
-        let movies = await pool.request().query(`select * from movie where namee='${movieName}'`)
+        let movies = await pool.request().query(`select * from movie where namee LIKE '%${movieName}%'`)
         console.log(movies);
         return(movies)
     }
