@@ -1,6 +1,6 @@
 const express = require('express')
 const cors = require('cors')
-const dbOperations = require('./dbFiles/operations')
+const dbOperations = require('./dbFiles/movieOperations')
 const {Movie} = require("./dbFiles/classes");
 
 
@@ -64,6 +64,17 @@ app.post('/deleteMovie', async (req, res) => {
     const result =  await dbOperations.getMovies(1)
     console.log('###: called getdata')
     res.send(result.recordset)
+})
+
+app.post('/getContractByMovie', async (req, res) => {
+    console.log('called getContractByMovie')
+    console.log(req.body.id)
+    const result = await dbOperations.getContractByMovie(req.body.id)
+    if (result.recordset.length ===0){
+        res.send({id:'Отсутствует'})
+
+    }
+    res.send(result.recordset[0])
 })
 
  app.listen(API_PORT, () => console.log(`listening on ${API_PORT}`))

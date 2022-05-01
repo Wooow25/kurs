@@ -74,10 +74,22 @@ const updateMovie = async(Movie) => {
 const deleteMovie = async(id) => {
     try{
         let pool = await mssql.connect(config);
-        console.log('procesing...')
         let movies = await pool.request()
         .query(`delete from movie where id=${id}`)
         return movies;
+    }
+    catch(error){
+        console.log(error)
+    }
+}
+
+
+const getContractByMovie = async(id) => {
+    try{
+        let pool = await mssql.connect(config);
+        let contractId = await pool.request()
+        .query(`select id from contraact where movie=${id}`)
+        return contractId;
     }
     catch(error){
         console.log(error)
@@ -90,5 +102,7 @@ module.exports = {
     getMovieByName,
     getMovieById,
     updateMovie,
-    deleteMovie
+    deleteMovie,
+    getContractByMovie,
+
 }

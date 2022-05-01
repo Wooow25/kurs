@@ -53,7 +53,18 @@ export const Input = (props) =>{
         <div className='input-wrapper' hidden={props.hidden}>  
         <p className='input-label'>{props.text}</p>
         <input className='input' type={props.type || "text"} name={props.name} placeholder={props.placeholder} 
-        defaultValue={props.value} onChange={props.onChange}></input>
+        defaultValue={props.value} onChange={props.onChange} disabled={props.disabled}/>
+        </div>
+    )
+}
+
+export const Select = (props) =>{
+    return(
+        <div className='input-wrapper' >  
+            <p className='input-label'>{props.text}</p>
+            <select className='input'>
+                {props.options.map((opt, index)=> <option selected key={index}>{opt}</option>)}
+            </select>
         </div>
     )
 }

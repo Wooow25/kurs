@@ -37,6 +37,27 @@ export const MovieCard = (props) => {
       console.log(newData);
       return newData
     }
+
+    
+    const getContractByMovie = async (id) => {
+      const newData = await fetch('/getContractByMovie', {
+        method:'POST',
+        headers:{
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          id: id
+        })
+      })
+          .then(res => res.json())
+      console.log(newData);
+      alert( `№ Договора: ${newData.id}` )
+
+      return newData
+    }
+
+
    
     return(
          <div className='movie-card flex' id={movie.id}>
@@ -51,7 +72,7 @@ export const MovieCard = (props) => {
             
              <div className='flex-column'>  
                 <Btn text ="Изменить" onClick={()=> updateData(movie)}  />
-                <Btn text ="Найти договор" onClick={()=> alert('Найти договор')}  />
+                <Btn text ="Найти договор" onClick={()=> getContractByMovie(movie.id)}  />
                 <Btn text ="Удалить" onClick={()=> props.onDelete(movie.id)}  />
             </div>
 
