@@ -60,7 +60,7 @@ export const MovieCard = (props) => {
 
    
     return(
-         <div className='movie-card flex' id={movie.id}>
+         <div className='card flex' id={movie.id}>
             <img className='movie-logo' src={movieLogo}></img>
             <div className='flex-column'> 
                 <Input text="Название" type="text" name="namee"  onChange={(e)=>{setInput(e)}}value={movie.namee}></Input>
@@ -119,7 +119,7 @@ export const EmptyMovieCard = (props) => {
       }))
     }
     return(
-        <div className='movie-card flex'>
+        <div className='card flex'>
             <img className='movie-logo' src={newMovie}></img>
             <div className='flex-column'> 
                 <Input text="Название" type="text" name="namee"  onChange={(e)=>{setInput(e)}} value={movie.namee}></Input>

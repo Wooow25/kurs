@@ -15,6 +15,15 @@
     @include flex
 }
 
+.card{
+    @include flex;
+    padding: 20px;
+    border: black 1px solid;
+    width:80%;
+    margin: 25px auto 10px;
+
+}
+
 .flex-column{
     @include flex;
     flex-direction: column;
@@ -57,13 +66,6 @@
     font: 15px bold;
     width: 100px;
     margin: 5px;
-}
-
-.movie-card{
-    padding: 20px;
-    border: black 1px solid;
-    width:80%;
-    margin: 25px auto 10px;
 }
 
 
@@ -130,4 +132,11 @@
 
 .center{
     margin:auto
+}
+
+.label-text{
+    margin: 0 10px;
+    color: gray;
+    font-weight: 600;
+   
 }

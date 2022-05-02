@@ -62,9 +62,18 @@ export const Select = (props) =>{
     return(
         <div className='input-wrapper' >  
             <p className='input-label'>{props.text}</p>
-            <select className='input'>
+            <select className='input' onChange={props.onChange} name={props.name}>
                 {props.options.map((opt, index)=> <option selected key={index}>{opt}</option>)}
             </select>
+        </div>
+    )
+}
+
+export const Label = (props) =>{
+    return(
+        <div className='input-wrapper' hidden={props.hidden}>  
+            <span className='input-label'>{props.text}</span>
+            <span className='label-text'>{props.value}</span>
         </div>
     )
 }

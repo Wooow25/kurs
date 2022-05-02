@@ -1,5 +1,5 @@
 
-import {NewReport} from '../сomponents/reports'
+import {NewReport, Report} from '../сomponents/reports'
 import React, { useState, useEffect, useCallback } from 'react';
 import {Btn, Header, } from '../сomponents/basic';
 
