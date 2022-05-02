@@ -11,7 +11,23 @@ const getCurrentDate =() =>{
 
 export const Report = (props) => {
     const [report, setReport] = useState({...props.report})
-
+    const createReport = async () => {
+        console.log(`data from inputs:`)
+        console.log(report)
+        await fetch('/createReport', {
+          method:'POST',
+          headers:{
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+            body: JSON.stringify({
+              ...report
+            })
+           
+        })
+        .then(res => res.json())
+        alert('Создано')
+      }
    
     return(
         <div className='card' hidden={props.hidden}>
@@ -29,7 +45,10 @@ export const Report = (props) => {
             </div>
       
             <div>
-                    <Btn text ="Отправить" onClick={()=> alert('Отправлено')}  />
+                    {props.new ? 
+                    <Btn text ="Сохранить" onClick={()=> createReport()}  /> : 
+                    <Btn text ="Отправить прокатчику" onClick={() => alert('Отправлено')}  />
+                    }
             </div> 
 
         </div> 
@@ -39,10 +58,10 @@ export const Report = (props) => {
 
 
 export const NewReport = (props) => {
-    const [report, setReport] = useState({сontraact: 0, period1:'01.01.01', period2:'02.02.02', title:'нестандартный', })
+    const [report, setReport] = useState({contraact: 0, period1:'01-01-01', period2:'02-02-02', title:'нестандартный', })
     const [generated, setGenerated] = useState({status:false, value: {contraact:-1, periood:'', title:'', creationDate: getCurrentDate(), sessionAmount:-1, ticketAmount:-1, revenue:-1 }})
     useEffect(()=>{
-        setGenerated({status:false, value: {contraact:report.сontraact, periood:`${report.period1}-${report.period1}`, title:report.title, creationDate: getCurrentDate(), sessionAmount: -1, ticketAmount:-1, revenue:-1 }})
+        setGenerated({status:false, value: {contraact:report.contraact, periood:`${report.period1}-${report.period1}`, title:report.title, creationDate: getCurrentDate(), sessionAmount: -1, ticketAmount:-1, revenue:-1 }})
     },[report])
     const setInput = (e) =>{
         setGenerated(prevState => ({
@@ -53,7 +72,7 @@ export const NewReport = (props) => {
       if(name === 'contraact' ){
         setReport(prevState => ({
           ...prevState,
-          [name]: parseInt(value)
+          contraact: parseInt(value)
         }))
         return;
       }
@@ -83,7 +102,7 @@ export const NewReport = (props) => {
         <>
             <div className='card'>
                 <div className='flex-column'> 
-                    <Input text="№ Договора" type="number" name="сontraact"  onChange={(e)=>{setInput(e)}} ></Input>
+                    <Input text="№ Договора" type="number" name="contraact"  onChange={(e)=>{setInput(e)}} ></Input>
                     <Input text="с (дата)" type="date" name="period1"  onChange={(e)=>{setInput(e)}} ></Input>
                     <Input text="по (дата)" type="date" name="period2" onChange={(e)=>{setInput(e)}}></Input>
                     <Select text ="Вид отчетности" name="title" options={titleTypes} onChange={(e)=>{setInput(e)}} ></Select>
@@ -91,24 +110,16 @@ export const NewReport = (props) => {
                 
                 <div className='flex-column'>  
                     <Btn text ="Рассчитать" onClick={async ()=> {
-                            //alert(`Отчет создан ${getCurrentDate()}`)
                             const calculation = await calculateReport();
-                                
-                            setGenerated(prevState => ({
-                                ...prevState,
-                                status: true,
-                                sessionAmount: calculation.sessionAmount , 
-                                ticketAmount: calculation.ticketAmount ,
-                                 revenue: calculation.revenue 
-                            }))
-
+                            setGenerated({status:true, value: {contraact:report.contraact, periood:`${report.period1} - ${report.period2}`, title:report.title, creationDate: getCurrentDate(), sessionAmount: calculation.sessionAmount , ticketAmount: calculation.ticketAmount , revenue: calculation.revenue }})
+   
                         }
                        
                         }  />
                 </div>
  
             </div> 
-            { generated.status ? <Report report={generated.value} /> : <span>Здесь будет сгенерированный отчет</span> } 
+            { generated.status ? <Report new report={generated.value} /> : <span>Здесь будет сгенерированный отчет</span> } 
         </>
     ) 
 }

@@ -63,7 +63,7 @@ export const Select = (props) =>{
         <div className='input-wrapper' >  
             <p className='input-label'>{props.text}</p>
             <select className='input' onChange={props.onChange} name={props.name}>
-                {props.options.map((opt, index)=> <option selected key={index}>{opt}</option>)}
+                {props.options.map((opt, index)=> <option key={index}>{opt}</option>)}
             </select>
         </div>
     )

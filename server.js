@@ -18,13 +18,13 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(cors());
 
+// ______________Movie________________
 
 app.post('/createMovie', async (req, res) => {
     console.log('called createMovie')
     await dbMovieOperations.createMovie(req.body)
     const result = await dbMovieOperations.getMovieByName(req.body.namee)
     res.send(result.recordset)
-    
 })
 
 app.post('/getMovieByName', async (req, res) => {
@@ -79,13 +79,34 @@ app.post('/getContractByMovie', async (req, res) => {
 })
 
 
+
+// ______________Report________________
 app.post('/calculateReport', async (req, res) => {
     console.log('called calculateReport');
     const result = await dbReportOperations.calculateReport(req.body.report)
-    
-    console.log(result);
+    res.send(result.recordset[0])
+})
+
+app.post('/createReport', async (req, res) => {
+    console.log('called createReport')
+    const result= await dbReportOperations.createReport(req.body)
+    console.log(result)
+})
+
+app.post('/getReportByContract', async (req, res) => {
+    console.log('called getReportByContract');
+    const result = await dbReportOperations.getReportByContract(req.body.id)
+    if (result.recordset.length ===0){
+        res.send([{contraact:-1, periood:'', title:'', creationDate: '00-00-00', sessionAmount:-1, ticketAmount:-1, revenue:-1 }])
+    }
+    else res.send(result.recordset)
+})
+
+app.post('/getReports', async (req, res) =>{
+    console.log('called getReports');
+    console.log(req.body.page);
+    const result =  await dbReportOperations.getReports(req.body.page)
     res.send(result.recordset)
-    rs
 })
 
 
