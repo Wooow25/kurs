@@ -5,6 +5,7 @@ import {Btn, Header} from './сomponents/basic';
 import Spinner from './сomponents/spinner';
 import Films from './pages/moviePage';
 import Reports from './pages/reportPage';
+import Distributors from './pages/distributorPage';
 import Menu from './pages/menuPage';
 import {
   BrowserRouter,
@@ -34,7 +35,7 @@ function App() {
             <Route path='/movies' element={<Films/>}/>
             <Route path='/contract' element={<LoadPage title='Контракты'/>}/>
             <Route path='/reports' element={<Reports/> || <LoadPage title='Отчеты'/>}/>
-            <Route path='/distributor' element={<LoadPage title='Прокатчик'/>}/>
+            <Route path='/distributor' element={<Distributors/> || <LoadPage title='Прокатчик'/>}/>
           </Routes>
           </BrowserRouter>
      

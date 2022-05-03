@@ -125,19 +125,16 @@ const Reports = ()=>{
 
 
         <div className="App">
-          <div className='flex'>
-            <Btn white text ="Посмотреть все" onClick={()=> {setPage(1)
-            setPrintType(pTypes.all)}}/>
-          </div>
-       
+            <div className='flex'>
+                <Btn white text ="Посмотреть все" onClick={()=> {setPage(1)
+                setPrintType(pTypes.all)}}/>
+            </div>
 
-         <h1 className='warning'>{message}</h1>
-          {printType === pTypes.find ? <FoundReports id={foundId}/> :
-           printType === pTypes.empty ? <NewReport/> :
-           <AllReports page={pageNumber} />} 
-         </div>
-
-    
+            <h1 className='warning'>{message}</h1>
+            {printType === pTypes.find ? <FoundReports id={foundId}/> :
+            printType === pTypes.empty ? <NewReport/> :
+            <AllReports page={pageNumber} />} 
+        </div>
 
     </>
     )
