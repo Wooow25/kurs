@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const dbMovieOperations = require('./dbFiles/movieOperations')
 const dbReportOperations = require('./dbFiles/reportOperations')
+const dbDistributorOperations = require('./dbFiles/distributorOperations')
 const {Movie} = require("./dbFiles/classes");
 
 
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(cors());
 
+
 // ______________Movie________________
 
 app.post('/createMovie', async (req, res) => {
@@ -31,14 +33,12 @@ app.post('/getMovieByName', async (req, res) => {
     console.log('called getMovieByName');
     const result = await dbMovieOperations.getMovieByName(req.body.namee)
     res.send(result.recordset)
-    
 })
 
 app.post('/getMovieById', async (req, res) => {
     console.log('called getMovieByName');
     const result = await dbMovieOperations.getMovieById(req.body.id)
     res.send(result.recordset)
-    
 })
 
 
@@ -57,7 +57,6 @@ app.post('/updateMovie', async (req, res) => {
     res.send(result.recordset[0])
 })
 
-
 app.post('/deleteMovie', async (req, res) => {
     console.log('called deleteMovie')
     console.log(req.body.id)
@@ -73,10 +72,12 @@ app.post('/getContractByMovie', async (req, res) => {
     const result = await dbMovieOperations.getContractByMovie(req.body.id)
     if (result.recordset.length ===0){
         res.send({id:'Отсутствует'})
-
     }
     res.send(result.recordset[0])
 })
+
+
+
 
 
 
@@ -111,6 +112,52 @@ app.post('/getReports', async (req, res) =>{
 
 
 
+
+// ______________Distributor________________
+
+
+app.post('/getDistributors', async (req, res) =>{
+    console.log('called getDistributors');
+    console.log(req.body.page);
+    const result =  await dbDistributorOperations.getDistributors(req.body.page)
+    res.send(result.recordset)
+})
+
+app.post('/getDistributorByName', async (req, res) => {
+    console.log('called getDistributorByName');
+    console.log(req.body)
+    const result = await dbDistributorOperations.getDistributorByName(req.body.namee)
+    res.send(result.recordset)
+})
+
+app.post('/createDistributor', async (req, res) => {
+    console.log('called createDistributor')
+    const result= await dbDistributorOperations.createDistributor(req.body)
+    console.log(result)
+})
+
+app.post('/updateDistributor', async (req, res) => {
+    console.log('called updateDistributor')
+    console.log(req.body)
+    await dbDistributorOperations.updateDistributor(req.body)
+    const result = await dbDistributorOperations.getDistributorByName(req.body.namee)
+    res.send(result.recordset[0])
+})
+
+app.post('/deleteDistributor', async (req, res) => {
+    console.log('called deleteDistributor')
+    console.log(req.body.id)
+    await dbDistributorOperations.deleteDistributor(req.body.id)
+    const result =  await dbDistributorOperations.getDistributors(1)
+    res.send(result.recordset)
+})
+
+app.post('/findActiveContracts', async (req, res) => {
+    console.log('called findActiveContracts')
+    console.log(req.body.id)
+    const result =  await dbDistributorOperations.findActiveContracts(req.body.id)
+    res.send(result.recordset)
+})
 
 
 
